@@ -2,7 +2,7 @@
 class ConnectqDB{
 	public $connect;
 	public function __construct(){
-		$this->connect = mysqli_connect("localhost" , "root" , "" ,"capstone2");
+		$this->connect = mysqli_connect("localhost" , "admin" , "root" ,"capstone2");
 	}
 }
 

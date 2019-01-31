@@ -30,7 +30,7 @@ include 'includes/header.php';
     <a class="nav-link" href="#news">News</a>
   </li>
    <li class="nav-item">
-    <a class="nav-link active" href="">Order Online</a>
+    <a class="nav-link " href="" data-toggle="modal" data-target="#add_user_Modal">Register</a>
   </li>
 
   <li class="nav-item">
@@ -142,9 +142,9 @@ include 'includes/header.php';
 <div class="section-content">
       <center><h1>OUR MENU</h1></center>
 <div class="toolbar mb2 mt2 justify-content-center">
-  <button class="btn fil-cat" href="" data-rel="fil">Filipino</button>
-  <button class="btn fil-cat" data-rel="indian">Indian</button>
-  <button class="btn fil-cat" data-rel="app">Appetizer</button>
+  <button class="btn fil-cat" href="" data-rel="fil">Filipino Dish</button>
+  <button class="btn fil-cat" data-rel="indian">Indian Dish</button>
+  <button class="btn fil-cat" data-rel="app">Appetizers</button>
   <button class="btn fil-cat" data-rel="soup">Soups</button>
 </div> 
   
@@ -153,38 +153,45 @@ include 'includes/header.php';
         <img src="./assets/image/karekares.jpg" alt="" />
   </div>
   <div class="lightbox fil mt-1">
+            <img src="./assets/image/lechon.jpg" alt="" />
+  </div>
+  <div class="lightbox fil mt-1">
     <img src="./assets/image/bicol.jpg" alt="" />
   </div>
   <div class="lightbox  fil mt-1">
     <img src="./assets/image/chopsuey.jpg" alt="" />
   </div>
-  <div class="lightbox indian mt-1">
-            <img src="./assets/image/biryani.jpg" alt="" />
+  <div class="lightbox fil soup mt-1">
+        <img src="./assets/image/sinigang.jpg" alt="" />
   </div>
   <div class="lightbox fil soup mt-1">
         <img src="./assets/image/bulalo.jpg" alt="" />
   </div>
-  <div class="lightbox app mt-1">
+
+   <div class="lightbox soup mt-1">
+            <img src="./assets/image/nilagang-baboy.jpg" alt="" />
+  </div>
+   <div class="lightbox indian mt-1">
+            <img src="./assets/image/biryani.jpg" alt="" />
+  </div>
+  <div class="lightbox indian mt-1">
             <img src="./assets/image/grilled.jpg" alt="" />
+  </div>
+   <div class="lightbox indian mt-1">
+            <img src="./assets/image/tikka.jpg" alt="" />
   </div>
    <div class="lightbox app mt-1">
     <img src="./assets/image/potato salad.jpg" alt="" />
   </div>
-  <div class="lightbox fil soup mt-1">
-        <img src="./assets/image/sinigang.jpg" alt="" />
-  </div>
+ 
   <div class="lightbox app mt-1">
            <img src="./assets/image/corn.jpg" alt="" /> 
   </div>
   <div class="lightbox app mt-1">
         <img src="./assets/image/taco.jpg" alt="" />
   </div>
-  <div class="lightbox indian mt-1">
-            <img src="./assets/image/tikka.jpg" alt="" />
-  </div>
-  <div class="lightbox fil mt-1">
-            <img src="./assets/image/lechon.jpg" alt="" />
-  </div>
+ 
+
 </div>
           </div>
         </section>   

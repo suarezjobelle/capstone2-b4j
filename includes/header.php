@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <title>B4J</title>
     <link rel="shortcut icon" href="./assets/image/icon.jpg">
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
@@ -47,6 +48,7 @@
             });
         });
     </script>
+  <!--   Filter Reservation Table -->
     <script>
 $(document).ready(function(){
   $("#myInput").on("keyup", function() {
@@ -57,7 +59,32 @@ $(document).ready(function(){
   });
 });
 </script>
-
+<!--   /Filter Reservation Table -->
+<!--   Filter Menu Table -->
+<script>
+$(document).ready(function(){
+  $("#myMenu").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+<!--   /Filter Menu Table -->
+<!--   Filter Product Table -->
+<script>
+$(document).ready(function(){
+  $("#myProduct").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+<!--   /Filter Product Table -->
+<!-- Isotope gallery -->
 <script>
  $(function() {
     var selectedClass = "";

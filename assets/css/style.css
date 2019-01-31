@@ -10,6 +10,9 @@ html,body
 
 
 }
+th{
+  background-color: #818C9C;
+}
 .container-login{
   width: 400px;margin: 0 auto;
   text-align: left;
@@ -46,8 +49,13 @@ html,body
   height: 80px;
   line-height: 80px;
 }
-
-.navbar-nav li a {
+.table-wrapper-scroll-y {
+display: block; 
+height: 500px;
+overflow-y: scroll;
+-ms-overflow-style: -ms-autohiding-scrollbar;
+}
+.navbar-nav li a {  
   padding-top: 0;
   padding-bottom:0;
 }

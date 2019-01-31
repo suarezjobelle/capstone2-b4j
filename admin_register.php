@@ -1,9 +1,10 @@
 <?php
+include 'includes/header.php';
 include_once 'core/init.php';
 $connect = new MainFunction();
 if (isset($_REQUEST['Submit'])) {
   extract($_REQUEST);
-  $register = $connect->reg_user($fullname,$contact,$position,$password,$email);
+  $register = $connect->reg_user($fullname,$contact,$email,$password,$position);
 
   if ($register) {
     # code...

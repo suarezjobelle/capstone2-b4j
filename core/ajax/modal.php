@@ -152,3 +152,191 @@ $(document).ready(function(){
   </div>
 </div>
 <!-- /cancel modal -->
+
+<!-- add_product modal -->
+<div class="modal fade" id="add_product">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">ADD A PRODUCT</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<form action="" method="POST" id="order_form">
+    <div class="form-group">
+      <label for="inputEmail4">Product Name</label>
+      <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Product Name">
+    </div>
+    <div class="form-group ">
+      <label for="inputPassword4">Product Number</label>
+      <input type="text" class="form-control" name="product_num" id="product_num" placeholder="Product Number">
+    </div>
+    <div class="form-group ">
+      <label for="inputPassword4">Product Quantity</label>
+      <input type="number" class="form-control" name="product_q" id="product_q" placeholder="Product Quantity">
+    </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" name="add" id="add" value="Add" class="btn btn-success" />
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /add_product modal -->
+<script>  
+$(document).ready(function(){
+ $('#order_form').on("submit", function(event){  
+  event.preventDefault();  
+  if($('#product_name').val() == "")  
+  {  
+   alert("Product Name is required");  
+  }  
+  else if($('#product_num').val() == '')  
+  {  
+   alert("Product Number is required");  
+  }  
+  else if($('#product_q').val() == '')
+  {  
+   alert("Product Quantity is required");  
+  }
+   
+  else  
+  {  
+   $.ajax({  
+    url:"core/ajax/insert_product.php",  
+    method:"POST",  
+    data:$('#order_form').serialize(),  
+    beforeSend:function(){  
+     $('#add').val("Adding");  
+    },  
+    success:function(data){  
+     $('#order_form')[0].reset();  
+     $('#add_product').modal('hide');  
+     alert("one product added")
+    }  
+   });  
+  }  
+ });
+});  
+ </script>
+
+ <!-- Ordering Online -->
+ <div class="modal fade" id="add_user_Modal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Sign up first to Order Online</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Sign In</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Log In</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+         <H3>REGISTRATION</H3>
+    <form action="" method="POST" id="user_form">
+
+      <div class="form-group">
+      <label for="inputEmail4">Customer Name</label>
+      <input type="text" class="form-control" id="user_name" name="user_name" >
+      </div>
+    <div class="form-group ">
+      <label for="inputPassword4">Address</label>
+      <input type="text" class="form-control" name="user_address" id="user_address" >
+    </div>
+    <div class="form-group ">
+      <label for="inputPassword4">Contact Number</label>
+      <input type="text" class="form-control" name="user_contact" id="user_contact">
+    </div>
+    <div class="form-group ">
+      <label for="inputPassword4">Email</label>
+      <input type="email" class="form-control" name="user_email" id="user_email">
+    </div>
+    <div class="form-group ">
+      <label for="inputPassword4">Password</label>
+      <input type="password" class="form-control" name="user_pass" id="user_pass">
+    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" name="user" id="user" value="Sign In" class="btn btn-success" />
+      </div>
+     </form>
+  </div>
+
+
+
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+         <H3>LOG IN</H3>
+       <form action="" method="POST" id="user_log">
+    <div class="form-group ">
+      <label for="inputPassword4">Email</label>
+      <input type="email" class="form-control" name="log_email" id="log_email">
+    </div>
+    <div class="form-group ">
+      <label for="inputPassword4">Password</label>
+      <input type="password" class="form-control" name="log_pass" id="log_pass">
+    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" name="user" id="user" value="Sign In" class="btn btn-success" />
+      </div>
+     </form>
+
+
+</div>
+</div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- /modal -->
+<!-- Order Online script -->
+<script>  
+$(document).ready(function(){
+ $('#user_form').on("submit", function(event){  
+  event.preventDefault();  
+  if($('#user_name').val() == "")  
+  {  
+   alert("Name is required");  
+  }  
+  else if($('#user_address').val() == '')  
+  {  
+   alert("Address is required");  
+  }  
+  else if($('#user_contact').val() == '')
+  {  
+   alert("Contact is required");  
+  }
+   
+  else  
+  {  
+   $.ajax({  
+    url:"core/ajax/insert_user.php",  
+    method:"POST",  
+    data:$('#user_form').serialize(),  
+    beforeSend:function(){  
+     $('#user').val("Log In");  
+    },  
+    success:function(data){  
+     $('#user_form')[0].reset();  
+     $('#add_user_Modal').modal('hide'); 
+      alert("Success")
+    }  
+   });  
+  }  
+ });
+});  
+ </script>
+<!-- /OrderOnline script -->

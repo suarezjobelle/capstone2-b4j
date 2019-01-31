@@ -10,8 +10,7 @@ class MainFunction extends ConnectqDB{
 //for register
  public function reg_user($fullname,$contact,$email,$password,$position){
  	$password =md5($password);
-
- 		$sql="INSERT INTO admin_account SET contact='$contact', password='$password', email='$email', fullname='$fullname', position='$position'";
+ 		$sql="INSERT INTO admin_account SET fullname='$fullname', contact='$contact', email='$email', password='$password',  position='$position'";
  		$result = mysqli_query($this->connect,$sql) or die (mysqli_connect_errno()."Data cannot insert");
  		return $result;
 
@@ -58,6 +57,23 @@ $query =mysqli_query($this->connect,$sql6);
 return  $query ;
 //End of fetch_data
 }
+//Select DAta
+public function select_data($table,$where){
+
+	$sql3 = "";
+	$condition = "";
+	foreach ($where as $key => $value){
+		# code...
+		$condition .= $key . "='" . $value . "' AND ";
+	}
+	$condition = substr($condition, 0, -5);
+	$sql3 .= "SELECT * FROM ".$table." WHERE ".$condition;
+	$query = mysqli_query($this->connect,$sql3);
+	$rows = mysqli_fetch_array($query);
+	return $rows;
+
+ }
+//End Select data
  //Class
 }
 ?> 
