@@ -1,6 +1,6 @@
 <?php 
-include 'includes/header.php';
  include_once 'core/ajax/modal.php';
+ include 'includes/header.php';
 ?>
 <body>
 <!--Home Content-->
@@ -30,7 +30,7 @@ include 'includes/header.php';
     <a class="nav-link" href="#news">News</a>
   </li>
    <li class="nav-item">
-    <a class="nav-link " href="" data-toggle="modal" data-target="#add_user_Modal">Register</a>
+    <a class="nav-link " href="" data-toggle="modal" data-target="#add_user_Modal">Register / Sign In</a>
   </li>
 
   <li class="nav-item">

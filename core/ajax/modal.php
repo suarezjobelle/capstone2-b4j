@@ -1,6 +1,20 @@
 <?php 
 include 'core/init.php';
+// $order_name = array("order_name" => $_POST['order_name']);
+  
 ?>
+ <?php 
+
+     if(isset($_REQUEST['user_login'])) {
+        extract($_REQUEST);
+        $logins = $connect->check_user($log_email,$log_pass);
+        if($logins) {
+            header("location:user_logged.php");
+        }else{
+            echo 'Invalid Username or Password';
+        }
+     }
+?> 
 <?php
 $n=10; 
 function getName($n) { 
@@ -14,7 +28,6 @@ function getName($n) {
   
     return $randomString; 
 } 
-  
 $random=getName($n); 
 ?>
 <!-- modal -->
@@ -229,24 +242,24 @@ $(document).ready(function(){
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Sign up first to Order Online</h5>
+        <h5 class="modal-title" id="exampleModalCenterTitle">Sign up for Online Ordering</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body" >
-<ul class="nav nav-tabs" id="myTab" role="tablist">
+<ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
   <li class="nav-item">
-    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Sign In</a>
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Sign Up</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Log In</a>
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Login</a>
   </li>
 </ul>
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-         <H3>REGISTRATION</H3>
-    <form action="" method="POST" id="user_form">
+        <center> <h3 class="mt-3" >REGISTRATION</h3> </center>
+    <form action="" method="POST" id="user_log" class="p-3">
 
       <div class="form-group">
       <label for="inputEmail4">Customer Name</label>
@@ -270,7 +283,7 @@ $(document).ready(function(){
     </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input type="submit" name="user" id="user" value="Sign In" class="btn btn-success" />
+        <input type="submit" name="user" id="user" value="Register" class="btn btn-success" />
       </div>
      </form>
   </div>
@@ -278,8 +291,8 @@ $(document).ready(function(){
 
 
   <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-         <H3>LOG IN</H3>
-       <form action="" method="POST" id="user_log">
+        <center> <h3 class="mt-3" >LOGIN</h3> </center>
+       <form action="" method="POST" name="logins" id="login_user" class="p-3">
     <div class="form-group ">
       <label for="inputPassword4">Email</label>
       <input type="email" class="form-control" name="log_email" id="log_email">
@@ -290,7 +303,7 @@ $(document).ready(function(){
     </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input type="submit" name="user" id="user" value="Sign In" class="btn btn-success" />
+        <input type="submit" name="user_login" id="user_login" value="Login" class="btn btn-success" />
       </div>
      </form>
 
@@ -305,7 +318,7 @@ $(document).ready(function(){
 <!-- Order Online script -->
 <script>  
 $(document).ready(function(){
- $('#user_form').on("submit", function(event){  
+ $('#user_log').on("submit", function(event){  
   event.preventDefault();  
   if($('#user_name').val() == "")  
   {  
@@ -325,12 +338,12 @@ $(document).ready(function(){
    $.ajax({  
     url:"core/ajax/insert_user.php",  
     method:"POST",  
-    data:$('#user_form').serialize(),  
+    data:$('#user_log').serialize(),  
     beforeSend:function(){  
-     $('#user').val("Log In");  
+     $('#user').val("Registered");  
     },  
     success:function(data){  
-     $('#user_form')[0].reset();  
+     $('#user_log')[0].reset();  
      $('#add_user_Modal').modal('hide'); 
       alert("Success")
     }  
@@ -340,3 +353,86 @@ $(document).ready(function(){
 });  
  </script>
 <!-- /OrderOnline script -->
+<div class="modal fade" id="order" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">ONLINE</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+<div class="modal-body">
+<form class="form-inline my-2 my-lg-0" id="order_id" method="post" >
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Menu Name</th>
+        <th>Price</th>
+        <th>Select</th>
+      </tr>
+    </thead>
+
+<?php  $myrow = $connect->fetch_data("Menu_list");
+    foreach($myrow as $rows){   ?>   
+
+   <!--   <input type="checkbox" name="menu" value="<?php echo $rowed['menu_name']?>"> -->
+ <tbody id="myTable">
+      <tr>
+        <td><?php echo $rows['menu_name']?></td>
+        <td><?php echo $rows['menu_price']?></td>
+        
+        <input type="text" name="order_price[]" id="<?php echo $rows["id"]; ?>">
+    <td><input class="order_name" type="checkbox" name="order_name[]" id="" value="<?php echo $rows['menu_name']?>"  data-order_id="<?php echo $rows["id"]; ?>" data-price="<?php echo $rows['menu_price']?>"></td>
+      </tr>
+    <?php }?>
+    </tbody>
+  </table>
+</div>
+       <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" name="order" id="order" value="Order" class="btn btn-success" />
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
+<?php 
+   
+
+ ?>
+
+<script> 
+
+$(document).ready(function(){
+ $('#order_id').on("submit",function(event){  
+    event.preventDefault();   
+   $.ajax({  
+    url:"core/ajax/insert_order.php",  
+    method:"POST",  
+    data:new FormData(this),
+    processData:false,
+    cache:false,
+    contentType:false,
+    beforeSend:function(){  
+     $('#order').val("Ordered");  
+    },  
+    success:function(data){  
+     $('#order_id')[0].reset();  
+     // $('#order').modal('hide');  
+     alert(data);
+    },error:function(data){
+      alert(data);
+    } 
+   });   
+   
+ });
+ $(".order_name").on('click',function(){
+    var id = $(this).data('order_id');
+    var value = $(this).val();
+    var price = $(this).data("price");
+    $("#"+id).val(price);
+    alert(value + " " + price);
+ });
+});  
+ </script>

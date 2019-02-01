@@ -8,6 +8,30 @@
   
   }
 ?>
+
+
+<script type="text/javascript">
+// $(document).ready(function(){
+// $("#order_id").submit(function(event){
+//   event.preventDefault();
+//   // var datas = $(this).serialize();
+//   // alert("Your Orders are \n" + datas);
+//    $.ajax({  
+//     url:"core/ajax/insert_orser.php",  
+//     method:"POST",  
+//     data:$('#order_id').serialize(),  
+//     beforeSend:function(){  
+//      $('#Order').val("Ordered");  
+//     },  
+//     success:function(data){  
+//      $('#order_id')[0].reset();  
+//      $('#order').modal('hide');  
+//      alert(data)
+//     }  
+//    });  
+// })
+// })
+</script>
 <div class="modal fade" id="edit_product">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">

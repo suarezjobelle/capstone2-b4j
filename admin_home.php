@@ -1,6 +1,6 @@
 <?php
-include 'includes/header.php';
 include_once 'core/ajax/modal.php'; 
+include 'includes/header.php';
 include 'core/init.php';
 $uid = $_SESSION['id'];
 $connect = new MainFunction();
