@@ -3,7 +3,7 @@ include 'core/init.php';
 include 'includes/header.php';
 $connect = new MainFunction();
 
-     if(isset($_REQUEST['submit'])) {
+     if(isset($_REQUEST['submit']) AND ($_SESSION['id'])) {
         extract($_REQUEST);
         $login = $connect->check_login($emailoruser,$password);
         if($login) {
@@ -12,10 +12,10 @@ $connect = new MainFunction();
             echo 'Invalid Username or Password';
         }
      }
-     if(isset($_SESSION['id'])) {
+     // if() {
         
-        header("location:admin_home.php");
-     }
+     //    header("location:admin_home.php");
+     // }
 
 
 ?>

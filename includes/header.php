@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -25,19 +24,19 @@
 <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script><!--   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
  -->   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
     <script type="text/javascript">
-    	$(function () {
+      $(function () {
   $(document).scroll(function () {
-	  var $nav = $(".container-nav");
-	  $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
-	});
+    var $nav = $(".container-nav");
+    $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+  });
 });
     </script>
     <script type="text/javascript">
-    	$('#exampleModal').on('show.bs.modal', function (event) {
+      $('#exampleModal').on('show.bs.modal', function (event) {
 });
     </script>
      <script type="text/javascript">
-    	$('#cancel').on('show.bs.modal', function (event) {
+      $('#cancel').on('show.bs.modal', function (event) {
 });
     </script>
  <script type="text/javascript">

@@ -1,6 +1,5 @@
 <?php
-$connect = mysqli_connect("localhost", "admin", "root", "capstone2");
-?>
+include 'core/init.php';?>
 <?php
 if(!empty($_POST))
 {
@@ -17,7 +16,7 @@ if(!empty($_POST))
     ";
        if(mysqli_query($connect, $query)){
 
-       
+       echo "inserted";
        }
 }
 ?>

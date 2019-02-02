@@ -3,6 +3,7 @@ include 'core/init.php';
 include 'includes/header.php';
 include_once 'core/ajax/modal.php';
 $id_user = $_SESSION['id_user'];
+// echo $id_user;
 ?>
 <body>
 <!--Home Content-->

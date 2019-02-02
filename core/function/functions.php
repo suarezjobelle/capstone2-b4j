@@ -1,5 +1,5 @@
 <?php
-include_once '../init.php';
+include 'connect_database.php';
 
 class MainFunction extends ConnectqDB{
 
@@ -9,11 +9,11 @@ class MainFunction extends ConnectqDB{
 	 $sql .="INSERT INTO " .$table;
 	 $sql .=" (".implode(",",array_keys($fields)).") VALUES ";
 	 $sql .="('".implode("','",array_values($fields))."')";
-	// echo $sql;
-	 $query = mysqli_query($this->connect,$sql);
-	 if($query){
-	   return true;
-	 }
+	echo $sql;
+	 // $query = mysqli_query($this->connect,$sql);
+	 // if($query){
+	 //   return true;
+	 // }
 }
  public function insert_message($uid,$rec_id,$msg){
 	$sql8="INSERT INTO table_reservation SET sender_id='$uid', receiver_id='$rec_id', message='$msg'";
@@ -94,7 +94,7 @@ public function check_user($log_email,$log_pass){
 	$sqllo="SELECT id  FROM user_account WHERE email='$log_email' OR password='$log_pass'";
 	//check username is available
 	$result = mysqli_query($this->connect,$sqllo);
-	$user_data = mysqli_fetch_array($result);
+	$user_data = mysqli_fetch_array($result);	
 	$count_row = $result->num_rows;
 	if ($count_row == 1) {
 		$_SESSION['logins'] = true;

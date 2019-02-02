@@ -83,3 +83,43 @@ $(document).ready(function(){
  });
 });  
  </script>
+COde ni Noly
+
+//  $count=count($_POST['order_name']);
+//     for ($i=0; $i < $count; $count++) { 
+//         $where = array("id"=>$i,);
+//         $row =$connect->select_data("Menu_list",$where);
+
+//     foreach ($row as $rows) {
+// $data = array("order_name"=> $rows['menu_name'],
+//                 "order_price" => $rows['menu_price'],
+// );
+// $sql=$connect->insert_data("order_list",$data);
+// echo $sql;
+//     }
+//     }
+
+
+    $order_price = $_POST["order_price"];
+    $order_name = $_POST["order_name"];
+    $count = count($order_name);
+    $counter = count($order_price);
+    $x = trim(implode(" ", array_values($order_price)));
+    for($z =1; $z <= $counter; $z++){
+        $explode = explode(" ",$x);
+        if(empty($explode)){
+            
+        }else{
+            $ex = $explode;
+        }
+    }
+    
+    for ($i=0; $i < $count; $i++) { 
+         // $data = array(
+            // "id_name"  => $id_user[$i],
+         //        "order_name" => $order_name[$i],
+         //        "order_price" => $explode[$i],
+         //    );
+           // $connect->insert_data("order_list",$data);
+    }
+    print_r($ex);  

@@ -22,7 +22,7 @@ $connect = new MainFunction();
   <a class="nav-link" id="v-pills-menu-tab" data-toggle="pill" href="#v-pills-menu" role="tab" aria-controls="v-pills-messages" aria-selected="false">Menu List</a>
   <a class="nav-link" id="v-pills-order-tab" data-toggle="pill" href="#v-pills-order" role="tab" aria-controls="v-pills-settings" aria-selected="false">Order List</a>
   <a class="nav-link" id="v-pills-cancel-tab" data-toggle="pill" href="#v-pills-cancel" role="tab" aria-controls="v-pills-settings" aria-selected="false">Cancelled List</a>
-  <a class="nav-link" href="/includes/logout.php">Logout</a>
+  <a class="nav-link" href="./includes/logout.php">Logout</a>
 </div>
         </nav>
 <!-- Page Content Holder -->

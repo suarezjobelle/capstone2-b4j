@@ -65,7 +65,7 @@
   <div class="row">
   	    <div class="col mt-5">
       <h5 class="mt-0">Chef Johnnielson Suarez</h5>
-    <b>The head chef, the man behind the success of B4J , a very hardworking man that believes in fil the small things in the beginning may lead us to a bigger future</b><br><br>
+    <b>The head chef, the man behind the success of B4J , a very hardworking man who believes in the small things in the beginning may lead us to a bigger future</b><br><br>
     <b>"Do not be so quick to judge or label, for one day the objects of ridicule may become what they are ever so used to being seen as. And when this <br>happens it is too late, another soul has ffilen to the cruel persecution of todays society and become what they are seen as instead of who they refily are. A person, just like everyone else."</b>
     	</div>
     		<div class="col">
@@ -235,7 +235,7 @@
                 <img src="./assets/image/band.jpg" alt="windows">
                 <div class="card-body">
                   <h5 class="card-title">
-                      B.A.D Band Will perform with us!
+                      B.A.D Band will be performing with us!
                   </h5>
                   <p class="card-text"> 
                       <small class="text-muted">

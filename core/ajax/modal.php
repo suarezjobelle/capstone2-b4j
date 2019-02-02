@@ -1,18 +1,18 @@
 <?php 
 include 'core/init.php';
-// $order_name = array("order_name" => $_POST['order_name']);
-  
 ?>
  <?php 
-
-     if(isset($_REQUEST['user_login'])) {
-        extract($_REQUEST);
+     if(isset($_REQUEST['register_userin'])) {
+        extract($_REQUEST); 
         $logins = $connect->check_user($log_email,$log_pass);
-        if($logins) {
+        if($logins OR isset($_SESSION['id'])) {
             header("location:user_logged.php");
         }else{
             echo 'Invalid Username or Password';
         }
+        // if (isset() {
+        //     header("location:user_logged.php");
+        // }
      }
 ?> 
 <?php
@@ -195,8 +195,8 @@ $(document).ready(function(){
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <input type="submit" name="add" id="add" value="Add" class="btn btn-success" />
       </div>
-      </form>
-    </div>
+    </form>
+     </div>
   </div>
 </div>
 <!-- /add_product modal -->
@@ -241,13 +241,15 @@ $(document).ready(function(){
  <div class="modal fade" id="add_user_Modal">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      
+<div class="modal-header">
         <h5 class="modal-title" id="exampleModalCenterTitle">Sign up for Online Ordering</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>
-      <div class="modal-body" >
+</div>
+
+<div class="modal-body" >
 <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Sign Up</a>
@@ -259,8 +261,7 @@ $(document).ready(function(){
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
         <center> <h3 class="mt-3" >REGISTRATION</h3> </center>
-    <form action="" method="POST" id="user_log" class="p-3">
-
+    <form action="" method="POST" id="register_user" class="p-3">
       <div class="form-group">
       <label for="inputEmail4">Customer Name</label>
       <input type="text" class="form-control" id="user_name" name="user_name" >
@@ -303,22 +304,20 @@ $(document).ready(function(){
     </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input type="submit" name="user_login" id="user_login" value="Login" class="btn btn-success" />
+        <input type="submit" name="register_userin" id="register_userin" value="Login" class="btn btn-success" />
       </div>
      </form>
-
-
 </div>
-</div>
+            </div>
     </div>
   </div>
-</div>
-</div>
+  </div>
+   </div>
 <!-- /modal -->
 <!-- Order Online script -->
 <script>  
 $(document).ready(function(){
- $('#user_log').on("submit", function(event){  
+ $('#register_user').on("submit", function(event){  
   event.preventDefault();  
   if($('#user_name').val() == "")  
   {  
@@ -338,12 +337,12 @@ $(document).ready(function(){
    $.ajax({  
     url:"core/ajax/insert_user.php",  
     method:"POST",  
-    data:$('#user_log').serialize(),  
+    datas:$('#register_user').serialize(),  
     beforeSend:function(){  
      $('#user').val("Registered");  
     },  
-    success:function(data){  
-     $('#user_log')[0].reset();  
+    success:function(datas){  
+     $('#register_user')[0].reset();  
      $('#add_user_Modal').modal('hide'); 
       alert("Success")
     }  
@@ -352,6 +351,14 @@ $(document).ready(function(){
  });
 });  
  </script>
+
+
+
+
+
+
+
+
 <!-- /OrderOnline script -->
 <div class="modal fade" id="order" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -363,29 +370,26 @@ $(document).ready(function(){
         </button>
       </div>
 <div class="modal-body">
-<form class="form-inline my-2 my-lg-0" id="order_id" method="post" >
+<form class="form-inline my-2 my-lg-0" name="listForm" id="order_id" method="post" >
   <table class="table table-bordered table-striped">
     <thead>
       <tr>
         <th>Menu Name</th>
         <th>Price</th>
-        <th>Select</th>
+        
       </tr>
     </thead>
-
+  Total: <input type="text" size="2" name="total" value="0"/> 
 <?php  $myrow = $connect->fetch_data("Menu_list");
-    foreach($myrow as $rows){   ?>   
+    foreach($myrow as $rows){   ?> 
 
-   <!--   <input type="checkbox" name="menu" value="<?php echo $rowed['menu_name']?>"> -->
- <tbody id="myTable">
-      <tr>
-        <td><?php echo $rows['menu_name']?></td>
-        <td><?php echo $rows['menu_price']?></td>
-        
-        <input type="text" name="order_price[]" id="<?php echo $rows["id"]; ?>">
-    <td><input class="order_name" type="checkbox" name="order_name[]" id="" value="<?php echo $rows['menu_name']?>"  data-order_id="<?php echo $rows["id"]; ?>" data-price="<?php echo $rows['menu_price']?>"></td>
-      </tr>
-    <?php }?>
+
+<tr>
+  <td><input type="text" name="menu[]" id="menu" value="<?php echo $rows['menu_name']?>"></td>
+   <td> <input type="checkbox" name="choice[]" id="choice" value="<?php echo $rows['menu_price']?>" onchange="checkTotal()"/><?php echo $rows['menu_price']?></td>
+    
+</tr>
+<?php } ?>
     </tbody>
   </table>
 </div>
@@ -397,13 +401,7 @@ $(document).ready(function(){
     </div>
   </div>
 </div>
-<?php 
-   
-
- ?>
-
 <script> 
-
 $(document).ready(function(){
  $('#order_id').on("submit",function(event){  
     event.preventDefault();   
@@ -425,7 +423,6 @@ $(document).ready(function(){
       alert(data);
     } 
    });   
-   
  });
  $(".order_name").on('click',function(){
     var id = $(this).data('order_id');
@@ -436,3 +433,20 @@ $(document).ready(function(){
  });
 });  
  </script>
+ <script type="text/javascript">
+   function checkTotal() { 
+    document.listForm.total.value = ''; var sum = 0; 
+    for (i=0;i<document.listForm.choice.length;i++) { 
+    if (document.listForm.choice[i].checked) { 
+    sum = sum + parseInt(document.listForm.choice[i].value); 
+      } 
+  } 
+document.listForm.total.value = sum; 
+// for (z=0;z<document.listForm.menu.length;z++) { 
+//     if (document.listForm.menu[i].checked) { 
+//     document.listForm.menu[i].value; 
+//       } 
+//   } 
+} 
+
+</script>
