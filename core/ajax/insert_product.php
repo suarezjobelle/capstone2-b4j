@@ -1,6 +1,7 @@
 <?php
-//insert.php  
 $connect = mysqli_connect("localhost", "admin", "root", "capstone2");
+?>
+<?php
 if(!empty($_POST))
 {
  $output = '';

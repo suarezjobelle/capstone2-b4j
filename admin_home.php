@@ -1,9 +1,8 @@
 <?php
-include_once 'core/ajax/modal.php'; 
-include 'includes/header.php';
 include 'core/init.php';
 $uid = $_SESSION['id'];
-$connect = new MainFunction();
+include_once 'core/ajax/modal.php'; 
+include 'includes/header.php';
 ?>
 <body class="admin-login">
   <div class="wrapper">
@@ -16,9 +15,9 @@ $connect = new MainFunction();
                 <h5 class="p-0">Welcome ,<?php $connect->get_fullname($uid);?></h5>
             </div>
 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-  <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-main" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
-  <a class="nav-link " id="v-pills-reserve-tab" data-toggle="pill" href="#v-pills-reserve" role="tab" aria-controls="v-pills-home" aria-selected="true">Reservation List</a>
-  <a class="nav-link" id="v-pills-product-tab" data-toggle="pill" href="#v-pills-product" role="tab" aria-controls="v-pills-profile" aria-selected="false">Product List</a>
+<!--   <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-main" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a> -->
+  <a class="nav-link active" id="v-pills-product-tab" data-toggle="pill" href="#v-pills-product" role="tab" aria-controls="v-pills-profile" aria-selected="false">Product List</a>
+  <a class="nav-link" id="v-pills-reserve-tab" data-toggle="pill" href="#v-pills-reserve" role="tab" aria-controls="v-pills-home" aria-selected="true">Reservation List</a>
   <a class="nav-link" id="v-pills-menu-tab" data-toggle="pill" href="#v-pills-menu" role="tab" aria-controls="v-pills-messages" aria-selected="false">Menu List</a>
   <a class="nav-link" id="v-pills-order-tab" data-toggle="pill" href="#v-pills-order" role="tab" aria-controls="v-pills-settings" aria-selected="false">Order List</a>
   <a class="nav-link" id="v-pills-cancel-tab" data-toggle="pill" href="#v-pills-cancel" role="tab" aria-controls="v-pills-settings" aria-selected="false">Cancelled List</a>
@@ -42,10 +41,10 @@ $connect = new MainFunction();
 <!-- content here -->
 <div class="tab-content mt-5" id="v-pills-tabContent">
 <!-- 1st Content -->
-<div class="tab-pane fade active" id="v-pills-main" role="tabpanel" aria-labelledby="v-pills-profile-tab">...</div>
+<!-- div class="tab-pane fade " id="v-pills-main" role="tabpanel" aria-labelledby="v-pills-profile-tab">...</div> -->
 <!-- /1st Content -->
 <!-- Reservation List Content -->
-  <div class="tab-pane fade show " id="v-pills-reserve" role="tabpanel" aria-labelledby="v-pills-home-tab">
+  <div class="tab-pane fade " id="v-pills-reserve" role="tabpanel" aria-labelledby="v-pills-home-tab">
 <div class="container">
   <h2>Reservation List</h2>
   <input class="form-control col-sm-5" id="myInput" type="text" placeholder="Search Name..">
@@ -89,7 +88,7 @@ $connect = new MainFunction();
   </div>
 <!-- /Reservation List Content -->
 <!-- Product Content -->
-  <div class="tab-pane fade" id="v-pills-product" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+  <div class="tab-pane fade show active" id="v-pills-product" role="tabpanel" aria-labelledby="v-pills-profile-tab">
     <div class="container">
   <h2>Fresh Product List</h2>
   <input class="form-control col-sm-5" id="myProduct" type="text" placeholder="Search Product Name..">
@@ -114,7 +113,7 @@ $connect = new MainFunction();
         <td><?php echo $rowed['product_name']?></td>
         <td><?php echo $rowed['product_number']?></td>
         <td><?php echo $rowed['product_quantity']?></td>
-         <td><a href="admin_home.php?edit<?php echo $_SESSION['id'];?>=&id=<?php echo $rowed['id']; ?> "data-toggle="modal" data-target="#edit_product" id="edit" name="edit" class="btn btn-primary view_data"><i class="far fa-edit"></i></a></td>
+         <td><a href="admin_home.php?edit=<?php echo $_SESSION['id']; ?>&id=<?php echo $rowed['id']; ?>"  ><i class="far fa-edit"></i></a></td>
       </tr>
     <?php }?>
     </tbody>
@@ -122,6 +121,34 @@ $connect = new MainFunction();
   </div>
 </div>
 </div>
+<?php 
+ if (isset($_GET["edit"])) {
+  # code...
+  $id = $_GET["id"];
+  $where = array("id"=>$id,);
+  $row = $connect->select_data("product_list",$where);
+
+ ?>
+<div class=" container card mt-5 col-sm-5">
+  <form action="" method="POST" id="edit_products">
+    <div class="form-group">
+      <label for="inputEmail4">Product Name</label>
+      <input type="hidden" name="id" value="<?php echo $row['id'];?>" readonly>
+      <input type="text" class="form-control" id="edit_product_name" name="edit_product_name" value="<?php echo $row['product_name']?>">
+    </div>
+    <div class="form-group ">
+      <label for="inputPassword4">Product Number</label>
+      <input type="text" class="form-control" name="edit_product_num" id="edit_product_num" value="<?php echo $row['product_number']?>">
+    </div>
+    <div class="form-group ">
+      <label for="inputPassword4">Product Quantity</label>
+      <input type="text" class="form-control" name="edit_product_q" id="edit_product_q" value="<?php echo $row['product_quantity']?>">
+    </div>
+            <input type="submit" name="edit" id="edit" value="Edit" class="btn btn-success" />
+
+  </form>
+      </div>
+<?php } ?>
 
 <!-- /Product Content -->
 
@@ -139,6 +166,7 @@ $connect = new MainFunction();
       <tr>
         <th>Menu Name</th>
         <th>Price</th>
+        <th>Action</th>
       </tr>
     </thead>
     <?php
@@ -151,18 +179,82 @@ $connect = new MainFunction();
       <tr>
         <td><?php echo $rows['menu_name']?></td>
         <td><?php echo $rows['menu_price']?></td>
-
+          <td><a href="admin_home.php?get=<?php echo $_SESSION['id']; ?>&id=<?php echo $rows['id']; ?>"  ><i class="far fa-edit ml-5"></i></a>
+            <a href="admin_home.php?get=<?php echo $_SESSION['id']; ?>&id=<?php echo $rows['id']; ?>" name="del" ><i class="fas fa-trash ml-5"></i></a>
+          </td>
       </tr>
     <?php }?>
     </tbody>
   </table> 
   </div>
 </div>
+<?php
+if ($_POST['del']) {
+  
+}
+
+?>
+
+<?php 
+ if (isset($_GET["get"])) {
+  # code...
+  $id = $_GET["id"];
+  $where = array("id"=>$id,);
+  $row = $connect->select_data("Menu_list",$where);
+
+ ?>
+<div class=" container card mt-5 col-sm-5">
+  <form action="" method="POST" id="edit_products">
+    <div class="form-group">
+      <label for="inputEmail4">Product Name</label>
+      <input type="hidden" name="id" value="<?php echo $row['id'];?>" readonly>
+      <input type="text" class="form-control" id="edit_name" name="edit_name" value="<?php echo $row['menu_name']?>">
+    </div>
+    <div class="form-group ">
+      <label for="inputPassword4">Product Number</label>
+      <input type="text" class="form-control" name="edit_price" id="edit_price" value="<?php echo $row['menu_price']?>">
+    </div>
+            <input type="submit" name="edit_menu" id="edit_menu" value="Edit" class="btn btn-success" />
+  </form>
+      </div>
+<?php } ?>
+
   </div>
 <!-- / Menu List Content -->
 
 <!-- Order list Content -->
-  <div class="tab-pane fade" id="v-pills-order" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+  <div class="tab-pane fade" id="v-pills-order" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+    <div class="card">
+  <table class="table table-bordered table-striped ">
+    <thead>
+      <tr>
+
+        <th>Order</th>
+        <th>Price</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <?php
+
+    $myrow = $connect->fetch_data("order_list");
+    foreach($myrow as $row){    
+
+?>
+    <tbody id="myTable">
+      <tr>
+        <td><?php echo $row['order_name']?></td>
+        <td><?php echo $row['order_price']?></td>
+        <td><?php echo $row['dates']?></td>
+
+      </tr>
+    <?php
+
+     }?>
+    </tbody>
+  </table> 
+    </div>
+
+  </div>
 <!-- /Order List Content -->
 
 <!-- Cancelled list Content -->

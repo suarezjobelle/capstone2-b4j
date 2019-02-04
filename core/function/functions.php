@@ -9,11 +9,10 @@ class MainFunction extends ConnectqDB{
 	 $sql .="INSERT INTO " .$table;
 	 $sql .=" (".implode(",",array_keys($fields)).") VALUES ";
 	 $sql .="('".implode("','",array_values($fields))."')";
-	echo $sql;
-	 // $query = mysqli_query($this->connect,$sql);
-	 // if($query){
-	 //   return true;
-	 // }
+	 $query = mysqli_query($this->connect,$sql);
+	 if($query){
+	   return true;
+	 }
 }
  public function insert_message($uid,$rec_id,$msg){
 	$sql8="INSERT INTO table_reservation SET sender_id='$uid', receiver_id='$rec_id', message='$msg'";
@@ -115,6 +114,60 @@ public function check_user($log_email,$log_pass){
 	 	echo $user_datas['fullname'];
 	 }
 // end
+	 //Start Update
+public function update_data($table,$where,$fields){
+	$sql = "";
+	$condition = "";
+	foreach ($where as $key => $value) {	
+		# code...
+		$condition .= $key . "='" .$value. "' AND ";
+	
+
+	}
+		$condition = substr($condition, 0, -5);
+		foreach ($fields as $key => $value) {
+			# code...
+			$sql .= $key . "='".$value."', ";
+		}
+		$sql = substr($sql, 0, -2);value . "' AND ";
+		$sql = "UPDATE " .$table." SET ".$sql." WHERE " .$condition;
+		if (mysqli_query($this->connect,$sql)) {
+			# code...
+			return true;
+		}
+}
+//End of Update
  //Class
 }
+$connect = new MainFunction;
+
+if(isset($_POST['edit'])){
+$id = $_POST['id'];
+$where = array("id"=>$id);
+$myarray = array (
+"id"=> $_POST['id'],
+"product_name"=> $_POST['edit_product_name'],
+"product_number"=> $_POST['edit_product_num'],
+"product_quantity"=> $_POST['edit_product_q']
+);
+ if ($connect->update_data("product_list",$where,$myarray)) {
+ 	# code...
+ 	header("location:admin_home.php?msg= Updated!");
+ }
+}
+
+if(isset($_POST['edit_menu'])){
+$id = $_POST['id'];
+$where = array("id"=>$id);
+$myarray = array (
+"id"=> $_POST['id'],
+"menu_name"=> $_POST['edit_name'],
+"menu_price"=> $_POST['edit_price']
+);
+ if ($connect->update_data("Menu_list",$where,$myarray)) {
+ 	# code...
+ 	header("location:admin_home.php?msg= Updated!");
+ }
+}
+
 ?> 

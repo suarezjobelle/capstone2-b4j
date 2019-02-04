@@ -1,7 +1,5 @@
 <?php
-include 'includes/header.php';
 include_once 'core/init.php';
-$connect = new MainFunction();
 if (isset($_REQUEST['Submit'])) {
   extract($_REQUEST);
   $register = $connect->reg_user($fullname,$contact,$email,$password,$position);
@@ -14,10 +12,11 @@ if (isset($_REQUEST['Submit'])) {
   }
 }
 ?>
+<?php include 'includes/header.php';?>
 <body class="admin-login">
-   <center><h1>REGISTER NOW</h1></center>
+  
 	<div class="container card mt-5 mb-5 p-5 col-md-3">
-
+ <center><h1>REGISTER NOW</h1></center>
 <form action="" method="post" name="reg">
 	<div class="form-group">
     <label for="inputAddress">Full Name</label>

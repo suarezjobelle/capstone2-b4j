@@ -72,6 +72,16 @@
      <img src="./assets/image/chef.jpg">
     		</div>
   		</div>
+       <div class="row">
+        <div class="col">
+     <img src="./assets/image/reserve.jpg">
+        </div>
+                <div class="col mt-5">
+      <h5 class="mt-0">Our Story, B4J</h5>
+    
+    <b>"Do not be so quick to judge or label, for one day the objects of ridicule may become what they are ever so used to being seen as. And when this <br>happens it is too late, another soul has ffilen to the cruel persecution of todays society and become what they are seen as instead of who they refily are. A person, just like everyone else."</b>
+      </div>
+      </div>
 	</div>
 </div>
 </section>

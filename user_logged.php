@@ -1,5 +1,5 @@
 <?php 
-include 'core/init.php';
+session_start();
 include 'includes/header.php';
 include_once 'core/ajax/modal.php';
 $id_user = $_SESSION['id_user'];

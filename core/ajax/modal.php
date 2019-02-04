@@ -1,18 +1,16 @@
 <?php 
 include 'core/init.php';
+include 'includes/header.php';
 ?>
  <?php 
      if(isset($_REQUEST['register_userin'])) {
         extract($_REQUEST); 
         $logins = $connect->check_user($log_email,$log_pass);
-        if($logins OR isset($_SESSION['id'])) {
+        if($logins AND isset($_SESSION['id'])) {
             header("location:user_logged.php");
         }else{
             echo 'Invalid Username or Password';
         }
-        // if (isset() {
-        //     header("location:user_logged.php");
-        // }
      }
 ?> 
 <?php
@@ -142,7 +140,7 @@ $(document).ready(function(){
 });  
  </script>
   <!-- /reservation script -->
-<!-- cancel modal -->
+ <!--  ===========================CANCEL RESERVATION ===========================-->
 <div class="modal fade" id="cancel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -153,13 +151,44 @@ $(document).ready(function(){
         </button>
       </div>
       <div class="modal-body">
-        <form class="form-inline my-2 my-lg-0">
-      <input class="form-control col-md-9 mr-2" type="search" placeholder="Enter Reservation Reference Number" aria-label="Search">
+  <form class="form-inline my-2 my-lg-0" method="post">
+      <input class="form-control col-md-9 mr-2" name="search_text" id="search_text" placeholder="Search for your Information">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-      </div>
+  </form>
+    <div id="result" class="mt-3"></div>
+      </div><script>
+$(document).ready(function(){
+  load_data();
+  function load_data(query)
+  {
+    $.ajax({
+      url:"core/ajax/search_reserve.php",
+      method:"post",
+      data:{query:query},
+      success:function(data)
+      {
+        $('#result').html(data);
+      }
+    });
+  }
+  
+  $('#search_text').keyup(function(){
+    var search = $(this).val();
+    if(search != '')
+    {
+      load_data(search);
+    }
+    else
+    {
+      load_data();      
+    }
+  });
+});
+</script>
+
+
  <hr style="border-top: 1px solid black;">
-          <center><p>Cancel Reservation</p></center>
+       
  
     </div>
   </div>
@@ -343,7 +372,7 @@ $(document).ready(function(){
     },  
     success:function(datas){  
      $('#register_user')[0].reset();  
-     $('#add_user_Modal').modal('hide'); 
+     // $('#add_user_Modal').modal('hide'); 
       alert("Success")
     }  
    });  
@@ -351,14 +380,6 @@ $(document).ready(function(){
  });
 });  
  </script>
-
-
-
-
-
-
-
-
 <!-- /OrderOnline script -->
 <div class="modal fade" id="order" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -385,8 +406,8 @@ $(document).ready(function(){
 
 
 <tr>
-  <td><input type="text" name="menu[]" id="menu" value="<?php echo $rows['menu_name']?>"></td>
-   <td> <input type="checkbox" name="choice[]" id="choice" value="<?php echo $rows['menu_price']?>" onchange="checkTotal()"/><?php echo $rows['menu_price']?></td>
+  <td><input type="hidden" name="menu[]" disabled id="<?php echo str_replace(" ", "", $rows['menu_name']);?>" value="<?php echo $rows['menu_name']?>"><?php echo $rows['menu_name']?></td>
+   <td> <input class="order_name" data-menu="<?php echo str_replace(" ", "", $rows['menu_name']);?>" data-price="<?php echo $rows['menu_price']?>" type="checkbox" name="choice[]" id="choice" value="<?php echo $rows['menu_price']?>" onchange="checkTotal()"/><?php echo $rows['menu_price']?></td>
     
 </tr>
 <?php } ?>
@@ -426,10 +447,18 @@ $(document).ready(function(){
  });
  $(".order_name").on('click',function(){
     var id = $(this).data('order_id');
-    var value = $(this).val();
     var price = $(this).data("price");
+    var menu = $(this).data("menu");
     $("#"+id).val(price);
-    alert(value + " " + price);
+    // alert(menu + " " + price);
+    $("#"+menu).prop("disabled",true);
+    // alert(menu);
+    if($(this).is(":checked")){
+        $("#"+menu).prop("disabled",false);
+        // alert("zxczxc");
+    }else{
+        $("#"+menu).prop("disabled",true);
+    }
  });
 });  
  </script>

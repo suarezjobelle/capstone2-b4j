@@ -229,9 +229,7 @@ list-style: none;
 .baguetteBox-button {
     background-color: transparent !important;
 }
-input{
-	border-color: black;
-}
+
 /*FOR ADMIN*/
 .admin-login{
   background-color: #C0C9D7;
