@@ -70,6 +70,13 @@ $query =mysqli_query($this->connect,$sql6);
 return  $query ;
 //End of fetch_data
 }
+
+public function fetch_selected(){
+$sql6 = "SELECT * FROM order_list INNER JOIN user_account ON order_list.id_name = user_account.id  ";
+$query =mysqli_query($this->connect,$sql6);
+return  $query ;
+//End of fetch_data
+}
 //Select DAta
 public function select_data($table,$where){
 

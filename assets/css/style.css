@@ -231,8 +231,10 @@ list-style: none;
 }
 
 /*FOR ADMIN*/
-.admin-login{
-  background-color: #C0C9D7;
+.elong{
+background: url('../image/hoogpaan.jpg') center center no-repeat;
+  background-size: cover;
+
 }
 .admin-navbar{
   background-color: #415C84;

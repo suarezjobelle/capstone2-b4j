@@ -2,9 +2,9 @@
 include 'core/init.php';
 $uid = $_SESSION['id'];
 include_once 'core/ajax/modal.php'; 
-include 'includes/header.php';
+
 ?>
-<body class="admin-login">
+<body class="admin-login">  
   <div class="wrapper">
 <nav id="sidebar">
     <div class="sidebar-header">
@@ -19,8 +19,9 @@ include 'includes/header.php';
   <a class="nav-link active" id="v-pills-product-tab" data-toggle="pill" href="#v-pills-product" role="tab" aria-controls="v-pills-profile" aria-selected="false">Product List</a>
   <a class="nav-link" id="v-pills-reserve-tab" data-toggle="pill" href="#v-pills-reserve" role="tab" aria-controls="v-pills-home" aria-selected="true">Reservation List</a>
   <a class="nav-link" id="v-pills-menu-tab" data-toggle="pill" href="#v-pills-menu" role="tab" aria-controls="v-pills-messages" aria-selected="false">Menu List</a>
-  <a class="nav-link" id="v-pills-order-tab" data-toggle="pill" href="#v-pills-order" role="tab" aria-controls="v-pills-settings" aria-selected="false">Order List</a>
+  <a class="nav-link" id="v-pills-order-tab" data-toggle="pill" href="#v-pills-order" role="tab" aria-controls="v-pills-settings" aria-selected="false">Ordered Online List</a>
   <a class="nav-link" id="v-pills-cancel-tab" data-toggle="pill" href="#v-pills-cancel" role="tab" aria-controls="v-pills-settings" aria-selected="false">Cancelled List</a>
+  <a class="nav-link" id="v-pills-reg-tab" data-toggle="pill" href="#v-pills-reg" role="tab" aria-controls="v-pills-settings" aria-selected="false">Registered Customer List</a>
   <a class="nav-link" href="./includes/logout.php">Logout</a>
 </div>
         </nav>
@@ -50,6 +51,7 @@ include 'includes/header.php';
   <input class="form-control col-sm-5" id="myInput" type="text" placeholder="Search Name..">
   <br>
 <div class="table-responsive table-wrapper-scroll-y card">
+  <form method="POST">
   <table class="table table-bordered table-striped ">
     <thead>
       <tr>
@@ -60,13 +62,14 @@ include 'includes/header.php';
         <th>Date</th>
         <th>Time</th>
         <th>Note</th>
+        <th>Action</th>
       </tr>
     </thead>
     <?php
 
     $myrow = $connect->fetch_data("table_reservation");
     foreach($myrow as $row){    
-  if($row['cancel_status']==1){
+  if($row['cancel_status']==1 AND $row['delete_status']==1 ){
 ?>
     <tbody id="myTable">
       <tr>
@@ -77,15 +80,29 @@ include 'includes/header.php';
         <td><?php echo $row['dated']?> </td>
         <td><?php echo $row['timed']?></td>
         <td><?php echo $row['message']?></td>
+        <td><button type="submit" value="<?php echo $row['id']; ?>" name="del_res" target="_self"><i class="fas fa-trash btn-light"></i></button></td>
       </tr>
     <?php 
 }
   }?>
     </tbody>
   </table> 
+  </form>
     </div>
   </div>
   </div>
+  <?php 
+if(isset($_POST['del_res']))
+{
+  $connect = mysqli_connect("localhost" , "admin" , "root" ,"capstone2");
+    $id=$_POST['del_res'];
+    $sql = "UPDATE table_reservation SET delete_status='0' WHERE id= '$id'";
+        if (mysqli_query($connect,$sql)) {
+            # code...
+           return true;
+        }
+}
+?>
 <!-- /Reservation List Content -->
 <!-- Product Content -->
   <div class="tab-pane fade show active" id="v-pills-product" role="tabpanel" aria-labelledby="v-pills-profile-tab">
@@ -94,30 +111,35 @@ include 'includes/header.php';
   <input class="form-control col-sm-5" id="myProduct" type="text" placeholder="Search Product Name..">
   <br>
   <div class="table-responsive table-wrapper-scroll-y card"><button type="button" id="add_product" data-toggle="modal" data-target="#add_product" class="btn btn-danger col-sm-1 mb-1" style="float: right"><i class="fas fa-plus"></i></button>
+    <form method="POST">
   <table class="table table-bordered table-striped"> 
     <thead>
       <tr>
         <th>Product Name</th>
         <th>Product Number</th>
         <th>Product Quantity</th>
-        <th>Edit</th>
+        <th>Action</th>
       </tr>
     </thead>
 
     <?php
     $myrow = $connect->fetch_data("product_list");
-    foreach($myrow as $rowed){    
+    foreach($myrow as $rowed){
+    if ($rowed['delete_status']==1) {
     ?>
     <tbody id="myTable">
       <tr>
         <td><?php echo $rowed['product_name']?></td>
         <td><?php echo $rowed['product_number']?></td>
         <td><?php echo $rowed['product_quantity']?></td>
-         <td><a href="admin_home.php?edit=<?php echo $_SESSION['id']; ?>&id=<?php echo $rowed['id']; ?>"  ><i class="far fa-edit"></i></a></td>
+         <td><button type="submit" name="edit" value="<?php echo $rowed['id']; ?>"><i class="far fa-edit"></i></button>
+          <button type="submit" value="<?php echo $rowed['id']; ?>" name="del1" target="_self"><i class="fas fa-trash btn-light"></i></button></td>
       </tr>
     <?php }?>
+     <?php }?>
     </tbody>
   </table> 
+  </form>
   </div>
 </div>
 </div>
@@ -149,17 +171,28 @@ include 'includes/header.php';
   </form>
       </div>
 <?php } ?>
-
+<?php 
+if(isset($_POST['del1']))
+{
+  $connect = mysqli_connect("localhost" , "admin" , "root" ,"capstone2");
+    $id=$_POST['del1'];
+    $sql = "UPDATE product_list SET delete_status='0' WHERE id= '$id'";
+        if (mysqli_query($connect,$sql)) {
+            # code...
+           return true;
+        }
+}
+?>
 <!-- /Product Content -->
 
-    
- 
+  
 <!-- Menu List Content -->
   <div class="tab-pane fade" id="v-pills-menu" role="tabpanel" aria-labelledby="v-pills-messages-tab">
 <div class="container">
   <h2>Menu List</h2>
   <input class="form-control col-sm-5" id="myMenu" type="text" placeholder="Search Menu Name..">
   <br>
+<form method="POST">
 <div class="table-responsive table-wrapper-scroll-y card">
   <table class="table table-bordered table-striped">
     <thead>
@@ -173,26 +206,37 @@ include 'includes/header.php';
 
     $myrow = $connect->fetch_data("Menu_list");
     foreach($myrow as $rows){    
+ if ($rows['delete_status']==1) {
+   # code...
  
 ?>
     <tbody id="myTable">
       <tr>
         <td><?php echo $rows['menu_name']?></td>
         <td><?php echo $rows['menu_price']?></td>
-          <td><a href="admin_home.php?get=<?php echo $_SESSION['id']; ?>&id=<?php echo $rows['id']; ?>"  ><i class="far fa-edit ml-5"></i></a>
-            <a href="admin_home.php?get=<?php echo $_SESSION['id']; ?>&id=<?php echo $rows['id']; ?>" name="del" ><i class="fas fa-trash ml-5"></i></a>
+          <td><a href="admin_home.php?get=<?php echo $_SESSION['id']; ?>&id=<?php echo $rows['id']; ?>" ><i class="far fa-edit"></i></a>
+            <button type="submit" value="<?php echo $rows['id']; ?>" name="del" target="_self"><i class="fas fa-trash btn-light"></i></button>
           </td>
       </tr>
+      <?php }?>
     <?php }?>
     </tbody>
+    </form>
   </table> 
   </div>
 </div>
 <?php
-if ($_POST['del']) {
-  
-}
 
+if(isset($_POST['del']))
+{
+  $connect = mysqli_connect("localhost" , "admin" , "root" ,"capstone2");
+    $id=$_POST['del'];
+    $sql = "UPDATE Menu_list SET delete_status='0' WHERE id= '$id'";
+        if (mysqli_query($connect,$sql)) {
+            # code...
+           return true;
+        }
+}
 ?>
 
 <?php 
@@ -224,41 +268,60 @@ if ($_POST['del']) {
 
 <!-- Order list Content -->
   <div class="tab-pane fade" id="v-pills-order" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-    <div class="card">
+     <h2>Ordered Online List</h2>
+<div class="card">
+  <form method="POST">
   <table class="table table-bordered table-striped ">
     <thead>
       <tr>
-
+        <th>Name</th>
         <th>Order</th>
         <th>Price</th>
         <th>Date</th>
+        <th>Action</th>
       </tr>
     </thead>
     <?php
-
-    $myrow = $connect->fetch_data("order_list");
-    foreach($myrow as $row){    
-
+    $sum=0;
+    $myrow = $connect->fetch_selected("order_list");
+    foreach($myrow as $row){  
+if ($row['delete_status']==1) {
 ?>
     <tbody id="myTable">
       <tr>
+        <td><?php echo $row['fullname']?></td>
         <td><?php echo $row['order_name']?></td>
         <td><?php echo $row['order_price']?></td>
         <td><?php echo $row['dates']?></td>
-
+        <td><button type="submit" value="<?php echo $row['id']; ?>" name="del_order" target="_self"><i class="fas fa-trash btn-light"></i></button></td>
       </tr>
-    <?php
-
-     }?>
+          <?php $sum+=$row['order_price']; ?>
+    <?php  }?>
+       <?php  }?>
     </tbody>
-  </table> 
+  </table>  
+  </form>
+      <h4>TOTAL: <?php echo $sum; ?> </h4>
     </div>
-
   </div>
+  <?php 
+if(isset($_POST['del_order']))
+{
+  $connect = mysqli_connect("localhost" , "admin" , "root" ,"capstone2");
+    $id=$_POST['del_order'];
+    $sql0 = "UPDATE order_list SET delete_status='0' WHERE id= '$id'";
+        if (mysqli_query($connect,$sql0)) {
+            # code...
+           return true;
+        }
+}
+?>
 <!-- /Order List Content -->
 
 <!-- Cancelled list Content -->
-  <div class="tab-pane fade" id="v-pills-cancel" role="tabpanel" aria-labelledby="v-pills-settings-tab"><div class="card">
+  <div class="tab-pane fade" id="v-pills-cancel" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+  <h2>Cancelled List</h2>
+<div class="card">
   <table class="table table-bordered table-striped ">
     <thead>
       <tr>
@@ -296,7 +359,40 @@ if ($_POST['del']) {
     </div>
   </div>
 <!-- /Cancelled List Content -->
+<!-- Registered Customer list Content -->
+  <div class="tab-pane fade" id="v-pills-reg" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+<h2>Customer List</h2>
+<div class="card">
+  <table class="table table-bordered table-striped ">
+    <thead>
+      <tr>
+        <th>Customer ID</th>
+        <th>Customer Name</th>
+        <th>Address</th>
+        <th>Contact</th>
+      </tr>
+    </thead>
+    <?php
 
+    $myrow = $connect->fetch_data("user_account");
+    foreach($myrow as $row){    
+?>
+    <tbody id="myTable">
+      <tr>
+        <td><?php echo $row['id']?></td>
+        <td><?php echo $row['fullname']?></td>
+        <td><?php echo $row['address']?></td>
+        <td><?php echo $row['contact']?></td>
+
+      </tr>
+    <?php
+
+     }?>
+    </tbody>
+  </table> 
+    </div>
+  </div>
+<!-- /Registered Customer List Content -->
 
 </div>
         </div>

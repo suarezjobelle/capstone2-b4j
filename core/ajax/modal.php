@@ -1,13 +1,12 @@
 <?php 
 include 'core/init.php';
-include 'includes/header.php';
 ?>
  <?php 
      if(isset($_REQUEST['register_userin'])) {
         extract($_REQUEST); 
         $logins = $connect->check_user($log_email,$log_pass);
         if($logins AND isset($_SESSION['id'])) {
-            header("location:user_logged.php");
+            header("Location:user_logged.php");
         }else{
             echo 'Invalid Username or Password';
         }
@@ -28,6 +27,7 @@ function getName($n) {
 } 
 $random=getName($n); 
 ?>
+<?php include 'includes/header.php';?>
 <!-- modal -->
 <div class="modal fade" id="add_data_Modal">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -155,7 +155,8 @@ $(document).ready(function(){
       <input class="form-control col-md-9 mr-2" name="search_text" id="search_text" placeholder="Search for your Information">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
   </form>
-    <div id="result" class="mt-3"></div>
+      <div id="result" class="mt-3"></div>
+
       </div><script>
 $(document).ready(function(){
   load_data();
@@ -171,7 +172,6 @@ $(document).ready(function(){
       }
     });
   }
-  
   $('#search_text').keyup(function(){
     var search = $(this).val();
     if(search != '')
@@ -267,9 +267,9 @@ $(document).ready(function(){
  </script>
 
  <!-- Ordering Online -->
- <div class="modal fade" id="add_user_Modal">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
+<div class="modal fade" id="add_user_Modal">
+<div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal-content">
       
 <div class="modal-header">
         <h5 class="modal-title" id="exampleModalCenterTitle">Sign up for Online Ordering</h5>
@@ -289,8 +289,8 @@ $(document).ready(function(){
 </ul>
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <center> <h3 class="mt-3" >REGISTRATION</h3> </center>
-    <form action="" method="POST" id="register_user" class="p-3">
+  <form action="" method="POST" id="register_user" class="p-3">  
+    <center> <h3 class="mt-3" >REGISTRATION</h3> </center>
       <div class="form-group">
       <label for="inputEmail4">Customer Name</label>
       <input type="text" class="form-control" id="user_name" name="user_name" >
@@ -337,11 +337,11 @@ $(document).ready(function(){
       </div>
      </form>
 </div>
-            </div>
-    </div>
-  </div>
-  </div>
-   </div>
+</div>
+    </div> <!-- modal body -->
+</div>
+</div>
+</div>
 <!-- /modal -->
 <!-- Order Online script -->
 <script>  
@@ -360,17 +360,24 @@ $(document).ready(function(){
   {  
    alert("Contact is required");  
   }
-   
+  else if($('#user_email').val() == '')
+  {  
+   alert("Email is required");  
+  }
+   else if($('#user_pass').val() == '')
+  {  
+   alert("Password is required");  
+  }
   else  
   {  
    $.ajax({  
     url:"core/ajax/insert_user.php",  
     method:"POST",  
-    datas:$('#register_user').serialize(),  
+    data:$('#register_user').serialize(),  
     beforeSend:function(){  
      $('#user').val("Registered");  
     },  
-    success:function(datas){  
+    success:function(data){  
      $('#register_user')[0].reset();  
      // $('#add_user_Modal').modal('hide'); 
       alert("Success")
@@ -471,11 +478,6 @@ $(document).ready(function(){
       } 
   } 
 document.listForm.total.value = sum; 
-// for (z=0;z<document.listForm.menu.length;z++) { 
-//     if (document.listForm.menu[i].checked) { 
-//     document.listForm.menu[i].value; 
-//       } 
-//   } 
 } 
 
 </script>

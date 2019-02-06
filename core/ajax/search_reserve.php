@@ -1,5 +1,5 @@
 <?php
-$connect = mysqli_connect("localhost", "admin", "root", "capstone2");
+$connect = mysqli_connect("localhost" , "admin" , "root" ,"capstone2");
 ?>
 <?php
 $output = '';
@@ -16,8 +16,9 @@ if(isset($_POST["query"]))
 $result = mysqli_query($connect, $query);
 
 if(mysqli_num_rows($result) > 0)
-{
-    $output .= '<div class="table-responsive">
+{ ?>
+<form method="POST" action="./includes/update_cancel.php">
+    <div class="table-responsive">
                     <table class="table table bordered">
                         <tr>
                             <th>Reference</th>
@@ -25,31 +26,30 @@ if(mysqli_num_rows($result) > 0)
                             <th>Date</th>
                             <th>Cancel</th>
                             
-                        </tr>';
+                        </tr>
+<?php
     while($row = mysqli_fetch_array($result))
     {
-        $output .= "
+        if ($row['cancel_status']==1) {
+
+   ?>     
             <tr>
-                <td>".$row["reservation_number"]."</td>
-                <td>".$row["customer_name"]."</td>
-                <td>".$row["dated"]."</td>
-                <td><a href='index.php?&id=". $row["id"]."' name='cancel' class='btn btn-dark'>Cancel</a></td>
+                <td><?php echo $row["reservation_number"]?></td>
+                <td><?php echo $row["customer_name"]?></td>
+                <td><?php echo $row["dated"]?></td>
+                <input type="hidden" name="id" value="<?php echo $row["id"]?>">
+                <td><button type="submit" value="<?php echo $row["id"]?>" onclick="testfun()" name="cancel" class="btn btn-dark">Cancel</button></td>
             </tr>
-        ";
-    }
-    echo $output;
-}
+        </table>
+</form>
+    <?php
+    }//if
+}//while
+
+}//numrows
 }else
 {
-    echo 'Data not Available';
+    echo 'Data not Available';  
 }
 
-
-
-if(isset($_POST['cancel']))
-{
-    $id = $_GET['id'];
-
-    mysqli_query($connect, "UPDATE table_reservation SET cancel_status=0 WHERE id='".$row['id']."'"); 
-}
-?>
+?>  

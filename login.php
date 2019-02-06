@@ -1,14 +1,14 @@
 <?php 
-include 'core/init.php';
+include_once 'core/init.php';
 $connect = new MainFunction();
-include 'includes/header.php';
+
 if(isset($_REQUEST['submit'])) {
         extract($_REQUEST);
         $login = $connect->check_login($emailoruser,$password);
         if($login AND isset($_SESSION['id'])) {
-            header("location:admin_home.php");
-        }else{
-            echo 'Invalid Username or Password';
+            header('Location:admin_home.php');       
+             }else{
+            echo '<center class="mt-5"><h3 style="color:red;"><b>Invalid Username or Password</b></h3></center>';
         }
      }
      // if(isset()) {
@@ -23,13 +23,13 @@ if (isset($_REQUEST['Submit'])) {
 
   if ($register) {
     # code...
-    echo 'Registration Successful';
+    echo '<center class="mt-5"><h3 style="color:black;"><b>Registration Succesful</b></h3></center>';
   }else{
-    echo 'Registration Failed';
+    echo '<center class="mt-5"><h3 style="color:red;"><b>Registration Failed</b></h3></center>';
   }
 }
 ?>
-
+<?php include 'includes/header.php';?>
 <body class="admin-login">
 <div class="justify-content-center card col-sm-4 p-5 mt-5" style="margin-left: 500px;">
 
@@ -77,11 +77,7 @@ if (isset($_REQUEST['Submit'])) {
 </form>
   </div>
  
-
-
-
-
-  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
         <center><h1>LOGIN</h1></center>
 <form action="" method="post" name="login">
     <span>Username or Email</span>
@@ -97,7 +93,7 @@ if (isset($_REQUEST['Submit'])) {
     <script type="text/javascript">
        function submitlogin(){
         var form = document.login;
-        if (form.emailoruser.value == "") {
+        if (form.emailoruser.valu == "") {
             alert("Enter Email or Pass");
             return false;
         }

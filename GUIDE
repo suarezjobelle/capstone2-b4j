@@ -1,0 +1,12 @@
+Some guidelines on using the B$J Website
+
+1. The main page is index.php it has the following:
+
+-Book a table(customer can book a table before going onsite)
+-cancellation of reserve table(the customer will search his / her name or reference number given after booking a table
+-Registration/Login (this is for online ordering, customer has to register and login before ordering online"
+
+2. The main page for Admin user is login.php it has the following:
+-Registration and Login
+-Login -> Admin_home.php
+
