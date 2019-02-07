@@ -69,8 +69,8 @@ $id_user = $_SESSION['id_user'];
     $sum=0;
     $myrow = $connect->fetch_data("order_list");
     foreach($myrow as $row){  
-if ($id_user == $row['id_name']) {
-?>
+      if ($id_user == $row['id_name']) {
+    ?>
     <tbody id="myTable">
       <tr>
         <td><?php echo $row['order_name']?></td>
@@ -93,6 +93,7 @@ if ($id_user == $row['id_name']) {
     </div>
   </div>
   <!--/ View Ordered Modal -->
+  
     <div class="container">
       <div class="row">
        <div class="col-sm-12">

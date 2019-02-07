@@ -5,11 +5,13 @@ include 'core/init.php';
      if(isset($_REQUEST['register_userin'])) {
         extract($_REQUEST); 
         $logins = $connect->check_user($log_email,$log_pass);
-        if($logins AND isset($_SESSION['id'])) {
+        if($logins) {
             header("Location:user_logged.php");
         }else{
             echo 'Invalid Username or Password';
         }
+     // }if (isset($_SESSION['id'])) {
+     //    header("Location:user_logged.php");
      }
 ?> 
 <?php
@@ -130,9 +132,9 @@ $(document).ready(function(){
     },  
     success:function(data){  
      $('#insert_form')[0].reset();  
-     $('#add_data_Modal').modal('hide'); 
-     var data = document.getElementById("random").value; 
-      alert("Your Reservation ID is : " + data + "  Save this ID for your cancellation" )
+     // $('#add_data_Modal').modal('hide'); 
+    var data = document.getElementById("random").value; 
+    alert("Your Reservation ID is : " + data + "  Save this ID for your cancellation" )
     }  
    });  
   }  

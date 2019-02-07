@@ -4,7 +4,7 @@ $uid = $_SESSION['id'];
 include_once 'core/ajax/modal.php'; 
 
 ?>
-<body class="admin-login">  
+<body class="admin">  
   <div class="wrapper">
 <nav id="sidebar">
     <div class="sidebar-header">
@@ -279,23 +279,23 @@ if(isset($_POST['del']))
         <th>Price</th>
         <th>Date</th>
         <th>Action</th>
-      </tr>
+      </tr>s
     </thead>
     <?php
     $sum=0;
     $myrow = $connect->fetch_selected("order_list");
-    foreach($myrow as $row){  
-if ($row['delete_status']==1) {
+    foreach($myrow as $row_or){  
+if ($row_or['delete_status']==1) {
 ?>
     <tbody id="myTable">
       <tr>
-        <td><?php echo $row['fullname']?></td>
-        <td><?php echo $row['order_name']?></td>
-        <td><?php echo $row['order_price']?></td>
-        <td><?php echo $row['dates']?></td>
-        <td><button type="submit" value="<?php echo $row['id']; ?>" name="del_order" target="_self"><i class="fas fa-trash btn-light"></i></button></td>
+        <td><?php echo $row_or['fullname']?></td>
+        <td><?php echo $row_or['order_name']?></td>
+        <td><?php echo $row_or['order_price']?></td>
+        <td><?php echo $row_or['dates']?></td>
+        <td><button type="submit" value="<?php echo $row_or['id']; ?>" name="del_order" target="_self"><i class="fas fa-trash btn-light"></i></button></td>
       </tr>
-          <?php $sum+=$row['order_price']; ?>
+          <?php $sum+=$row_or['order_price']; ?>
     <?php  }?>
        <?php  }?>
     </tbody>

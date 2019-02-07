@@ -5,13 +5,13 @@ $connect = new MainFunction();
 if(isset($_REQUEST['submit'])) {
         extract($_REQUEST);
         $login = $connect->check_login($emailoruser,$password);
-        if($login AND isset($_SESSION['id'])) {
+        if($login AND isset($_SESSION['id']) ) {
             header('Location:admin_home.php');       
              }else{
             echo '<center class="mt-5"><h3 style="color:red;"><b>Invalid Username or Password</b></h3></center>';
         }
      }
-     // if(isset()) {
+     // if() {
         
      //    header("location:admin_home.php");
      // }
@@ -30,7 +30,7 @@ if (isset($_REQUEST['Submit'])) {
 }
 ?>
 <?php include 'includes/header.php';?>
-<body class="admin-login">
+<body class="elong">
 <div class="justify-content-center card col-sm-4 p-5 mt-5" style="margin-left: 500px;">
 
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -69,7 +69,7 @@ if (isset($_REQUEST['Submit'])) {
     <option selected>Choose...</option>
     <option value="Manager">Manager</option>
     <option value="Admin">Admin</option>
-=
+
   </select>
     </div>
  
